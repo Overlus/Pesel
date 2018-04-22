@@ -26,7 +26,7 @@ namespace Pesel
                     tmpData = tmpData + liczbaPesel;
                 }
             }
-            for (int i = 2; i <= 7; i++)
+            for (int i = 2; i <= tmpData.Length -1; i++)
             {
 
                 liczbaPesel = Pesel[tmp];
