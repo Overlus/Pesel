@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pesel
 {
-    class Class1 : Program
+    class  Class1 : Program
     {
 
 
@@ -50,7 +50,7 @@ namespace Pesel
             int wynik = 0;
             char liczbaPesel;
             int odejm;
-            bool spr = true;
+            
             prawidlowaSuma = (int)char.GetNumericValue(Pesel[Pesel.Length - 1]);
             for (int i = 0; i < 10; i++)
             {
@@ -63,17 +63,15 @@ namespace Pesel
 
             if (odejm == 0 && (int)char.GetNumericValue(Pesel[Pesel.Length - 1]) == 0)
             {
-                return spr;
+                return true;
             }
             else if (10 - odejm == prawidlowaSuma)
             {
-                return spr;
+                return true;
             }
             else
             {
-                spr = false;
-
-                return spr;
+                return false;
 
             }
 
@@ -81,27 +79,27 @@ namespace Pesel
         }
         public Boolean CheckDigits(string Pesel) // spr ilości liczb
         {
-            bool spr = true;
+           
             if (Pesel.Length == 11)
             {
-                return spr;
+                return true;
             }
             else
             {
-                spr = false;
-                return spr;
+                
+                return false;
             }
         }
         public Boolean Sex(string Pesel, string Plec)
         {
-            bool spr = false;
+
             char SexLetter;
             SexLetter = Plec[0];
             if (SexLetter == 'K' || SexLetter == 'k')
             {
                 if ((int)char.GetNumericValue(Pesel[Pesel.Length - 2]) % 2 == 0)//Kobieta
                 {
-                    spr = true;
+                    
                     return true;
 
                 }
@@ -110,14 +108,14 @@ namespace Pesel
             {
                 if ((int)char.GetNumericValue(Pesel[Pesel.Length - 2]) % 2 == 1)//Mężczyzna 
                 {
-                    spr = true;
+                    
 
                     return true;
 
                 }
             }
 
-            return spr;
+            return false;
         }
 
     }
