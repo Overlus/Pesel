@@ -10,6 +10,7 @@ namespace Pesel
     {
         static void Main(string[] args)
         {
+            //Naprawić Spr Daty !!!
 
             string Pesel0;
             string Data;
@@ -18,7 +19,7 @@ namespace Pesel
             bool Odp2;
             bool Odp3;
             bool Odp4;
-
+            
             Console.WriteLine("Podaj Pesel... ");
             Pesel0 = Console.ReadLine();
             Console.WriteLine("Podaj date urodzenia...");
@@ -27,13 +28,13 @@ namespace Pesel
             Console.WriteLine("Podaj Płęć...");
             Plec = Console.ReadLine();
             Class1 check = new Class1();
-
+            string CorektaPesel = DellSpace(Pesel0);
             //check.CheckPesel(Pesel, Data);
-            Odp1 = check.CheckData(DellSpace(Pesel0), Data);
-            Odp2 = check.CheckDigits(DellSpace(Pesel0));
-            Odp3 = check.Sex(DellSpace(Pesel0), Plec);
-            Odp4 = check.ControlSum(DellSpace(Pesel0));
-            if (check.ControlSum(DellSpace(Pesel0)) == true && check.Sex(DellSpace(Pesel0), Plec) == true && check.CheckDigits(DellSpace(Pesel0)) == true && check.CheckData(DellSpace(Pesel0), Data) == true)
+            Odp1 = check.CheckData(CorektaPesel, Data);
+            Odp2 = check.CheckDigits(CorektaPesel);
+            Odp3 = check.Sex(CorektaPesel, Plec);
+            Odp4 = check.ControlSum(CorektaPesel);
+            if (check.ControlSum(CorektaPesel) == true && check.Sex(CorektaPesel, Plec) == true && check.CheckDigits(CorektaPesel) == true && check.CheckData(CorektaPesel, Data) == true)
             {
                 Console.WriteLine("Prawidłowy Pesel");
             }
@@ -47,26 +48,32 @@ namespace Pesel
 
             //  PeselNr = Int32.Parse(Pesel);
 
-
+            
 
 
 
             Console.ReadKey();
             // Pesel = Int32.Parse(Console.ReadLine());
         }
-        static String DellSpace(string Pesel0) // usuwanie spacji w peslu
+        static String DellSpace(string Pesel0) // usuwanie znakow w peslu
         {
-            string Pesel = "";
-            /*   Pesel = "";
-               for(int i = 0; i<Pesel0.Length -1; i++)
-               {
-                   if(Pesel0[i] != (char)32)
-                   {
-                       Pesel = Pesel + Pesel0;
-                   }
-               }*/
-            Pesel = Pesel0;
-            return Pesel;
+            if (Pesel0.Length > 11)
+            {
+                string Pesel = "";
+                
+                char Peselchar;
+                for (int i = 0; i < Pesel0.Length - 1; i++)
+                {
+                    Peselchar = Pesel0[i];
+                    if (char.IsDigit(Peselchar))
+                    {
+                        Pesel = Pesel + Peselchar;
+                    }
+                }
+                
+                return Pesel;
+            }
+            else return Pesel0;
         }
     }
 }
