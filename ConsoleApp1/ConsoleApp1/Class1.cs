@@ -11,114 +11,115 @@ namespace Pesel
 
 
 
-        public Boolean CheckData(string Pesel, string Data)
+        public Boolean CheckData(string Pesel, string rok, string miesiac, string dzien)
         {
-            char liczbaPesel;
-            char liczbaData;
-            int tmp = 0;
-            bool spr = true;
-            string tmpData = "";
-            for (int i = 0; i < Data.Length; i++)
+            int dzienInt = Int32.Parse(dzien);
+            int miesiacInt = Int32.Parse(miesiac);
+            char miesiacChar;
+            if (miesiac.Length == 2)
             {
-                liczbaPesel = Data[i];
-                if (char.IsDigit(liczbaPesel))
-                {
-                    tmpData = tmpData + liczbaPesel;
-                }
+                miesiacChar = miesiac[1];
             }
-            for (int i = 2; i <= tmpData.Length -1; i++)
+            else miesiacChar = miesiac[0];
+
+            int rokInt = Int32.Parse(rok);
+        
+            int[] trzydziescdni = new int[] { 4, 6, 9, 11 };
+            int[] trzydziesci_jeden = new int[] { 1, 3, 5, 7, 8, 10, 12 };
+
+            if (rokInt % 4 == 0 && miesiacInt < 10 && miesiacChar == '2' && dzienInt > 29)
             {
-
-                liczbaPesel = Pesel[tmp];
-                liczbaData = tmpData[i];
-
-                if (tmp < 5)
-                { tmp = tmp + 1; }
-                if (liczbaPesel == liczbaData)
-                {
-                    spr = true;
-
-                }
-                else spr = false;
+                return false;
             }
-            return spr;
-        }
-        public Boolean ControlSum(string Pesel)
-        {
-            int[] tabela = new int[] { 1, 3, 7, 9, 1, 3, 7, 9, 1, 3 };
-            int prawidlowaSuma;
-            int wynik = 0;
-            char liczbaPesel;
-            int odejm;
-            bool spr = true;
-            prawidlowaSuma = (int)char.GetNumericValue(Pesel[Pesel.Length - 1]);
-            for (int i = 0; i < 10; i++)
+            else if (rokInt % 4 != 0 && miesiacInt < 10 && miesiacChar == '2' && dzienInt > 28)
             {
-                liczbaPesel = Pesel[i];
-                wynik += tabela[i] * (int)char.GetNumericValue(liczbaPesel);
-
+                return false;
             }
-            odejm = wynik % 10;
-
-
-            if (odejm == 0 && (int)char.GetNumericValue(Pesel[Pesel.Length - 1]) == 0)
+            else if (rokInt % 4 != 0 && miesiacInt == 4 || miesiacInt == 6 || miesiacInt == 9 || miesiacInt == 11 && dzienInt > 30)
             {
-                return spr;
+                return false;
             }
-            else if (10 - odejm == prawidlowaSuma)
+            else if (rokInt % 4 != 0 && miesiacInt == 1 || miesiacInt == 3 || miesiacInt == 5 || miesiacInt == 7 || miesiacInt == 8 || miesiacInt == 10 || miesiacInt == 12 && dzienInt > 31) 
             {
-                return spr;
+                return false;
             }
             else
             {
-                spr = false;
-
-                return spr;
-
+                return true;
             }
-
-
+                
         }
-        public Boolean CheckDigits(string Pesel) // spr ilości liczb
-        {
-            bool spr = true;
-            if (Pesel.Length == 11)
+            public Boolean ControlSum(string Pesel)
             {
-                return spr;
-            }
-            else
-            {
-                spr = false;
-                return spr;
-            }
-        }
-        public Boolean Sex(string Pesel, string Plec)
-        {
-            bool spr = false;
-            char SexLetter;
-            SexLetter = Plec[0];
-            if (SexLetter == 'K' || SexLetter == 'k')
-            {
-                if ((int)char.GetNumericValue(Pesel[Pesel.Length - 2]) % 2 == 0)//Kobieta
+                int[] tabela = new int[] { 1, 3, 7, 9, 1, 3, 7, 9, 1, 3 };
+                int prawidlowaSuma;
+                int wynik = 0;
+                char liczbaPesel;
+                int odejm;
+                bool spr = true;
+                prawidlowaSuma = (int)char.GetNumericValue(Pesel[Pesel.Length - 1]);
+                for (int i = 0; i < 10; i++)
                 {
-                    spr = true;
-                    return true;
+                    liczbaPesel = Pesel[i];
+                    wynik += tabela[i] * (int)char.GetNumericValue(liczbaPesel);
 
                 }
-            }
-            if (SexLetter == 'M' || SexLetter == 'm')
-            {
-                if ((int)char.GetNumericValue(Pesel[Pesel.Length - 2]) % 2 == 1)//Mężczyzna 
+                odejm = wynik % 10;
+
+
+                if (odejm == 0 && (int)char.GetNumericValue(Pesel[Pesel.Length - 1]) == 0)
                 {
-                    spr = true;
+                    return spr;
+                }
+                else if (10 - odejm == prawidlowaSuma)
+                {
+                    return spr;
+                }
+                else
+                
 
-                    return true;
-
+                return false;
+            }
+            public Boolean CheckDigits(string Pesel) // spr ilości liczb
+            {
+                bool spr = true;
+                if (Pesel.Length == 11)
+                {
+                    return spr;
+                }
+                else
+                {
+                    spr = false;
+                    return spr;
                 }
             }
+            public Boolean Sex(string Pesel, string Plec)
+            {
+                bool spr = false;
+                char SexLetter;
+                SexLetter = Plec[0];
+                if (SexLetter == 'K' || SexLetter == 'k')
+                {
+                    if ((int)char.GetNumericValue(Pesel[Pesel.Length - 2]) % 2 == 0)//Kobieta
+                    {
+                        spr = true;
+                        return true;
 
-            return spr;
+                    }
+                }
+                if (SexLetter == 'M' || SexLetter == 'm')
+                {
+                    if ((int)char.GetNumericValue(Pesel[Pesel.Length - 2]) % 2 == 1)//Mężczyzna 
+                    {
+                        spr = true;
+
+                        return true;
+
+                    }
+                }
+
+                return spr;
+            }
+
         }
-
-    }
-}
+}   

@@ -13,28 +13,37 @@ namespace Pesel
             //Naprawić Spr Daty !!!
 
             string Pesel0;
-            string Data;
+            
             string Plec;
             bool Odp1;
             bool Odp2;
             bool Odp3;
             bool Odp4;
+            string dzien;
+            string miesiac;
+            string rok;
+            
             
             Console.WriteLine("Podaj Pesel... ");
             Pesel0 = Console.ReadLine();
             Console.WriteLine("Podaj date urodzenia...");
-            Console.WriteLine("Wzór rrrr/mm/dd");
-            Data = Console.ReadLine();
+            Console.WriteLine("Podaj rok");
+            rok = Console.ReadLine();
+            Console.WriteLine("Podaj miesiąc");
+            miesiac = Console.ReadLine();
+            Console.WriteLine("Pdaja dzień");
+            dzien = Console.ReadLine();
             Console.WriteLine("Podaj Płęć...");
             Plec = Console.ReadLine();
             Class1 check = new Class1();
             string CorektaPesel = DellSpace(Pesel0);
             //check.CheckPesel(Pesel, Data);
-            Odp1 = check.CheckData(CorektaPesel, Data);
+            Odp1 = check.CheckData(CorektaPesel,rok, miesiac,dzien );
             Odp2 = check.CheckDigits(CorektaPesel);
             Odp3 = check.Sex(CorektaPesel, Plec);
             Odp4 = check.ControlSum(CorektaPesel);
-            if (check.ControlSum(CorektaPesel) == true && check.Sex(CorektaPesel, Plec) == true && check.CheckDigits(CorektaPesel) == true && check.CheckData(CorektaPesel, Data) == true)
+            if (check.ControlSum(CorektaPesel) == true && check.Sex(CorektaPesel, Plec) == true &&
+                check.CheckDigits(CorektaPesel) == true && check.CheckData(CorektaPesel, rok , miesiac ,dzien) == true)
             {
                 Console.WriteLine("Prawidłowy Pesel");
             }
